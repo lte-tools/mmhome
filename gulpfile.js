@@ -9,8 +9,8 @@ var paths = {
   client_src: './src/static/',
   server_scripts: './src/server/**/*.js',
   client_scripts: './src/static/js/**/*.js',
-  server_dist: './dist/server/',
-  client_dist: './dist/static/'
+  server_debug: './build/debug/server/',
+  client_debug: './build/debug/static/'
 };
 
 gulp.task('js_hint', function() {
@@ -33,28 +33,28 @@ gulp.task('js_hint', function() {
     });
 });
 
-gulp.task('build-server', function() {
+gulp.task('build-server-debug', function() {
   gulp.src(path.join(paths.server_src, 'app.js')) 
-    .pipe(gulp.dest(paths.server_dist));
+    .pipe(gulp.dest(paths.server_debug));
   gulp.src(path.join(paths.server_src, 'views/*'))
-    .pipe(gulp.dest(path.join(paths.server_dist, 'views')));
+    .pipe(gulp.dest(path.join(paths.server_debug, 'views')));
 });
 
-gulp.task('build-client', function() {
+gulp.task('build-client-debug', function() {
   gulp.src(paths.client_scripts)
     .pipe(concat('mmhome.js'))
-    .pipe(gulp.dest('./dist/static/js/'));
+    .pipe(gulp.dest(path.join(paths.client_debug, 'js')));
   gulp.src(path.join(paths.client_src, 'tpl/*'))
-    .pipe(gulp.dest(path.join(paths.client_dist, 'tpl')));
+    .pipe(gulp.dest(path.join(paths.client_debug, 'tpl')));
   gulp.src(path.join(paths.client_src, 'img/*'))
     .pipe(imagemin({
       progressive: true,
       optimizationLevel: 1
     }))
-    .pipe(gulp.dest(path.join(paths.client_dist, 'img')));
+    .pipe(gulp.dest(path.join(paths.client_debug, 'img')));
 });
 
-gulp.task('build', ['build-client', 'build-server']);
+gulp.task('build-debug', ['build-client-debug', 'build-server-debug']);
 
-gulp.task('default', ['js_hint', 'build']);
+gulp.task('default', ['js_hint', 'build-debug']);
 
