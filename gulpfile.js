@@ -1,8 +1,7 @@
 var gulp = require('gulp'),
     concat = require('gulp-concat'),
     jshint = require('gulp-jshint'),
-    path = require('path'),
-    imagemin = require('gulp-imagemin');
+    path = require('path');
 
 var paths = {
   server_src: './src/server/',
@@ -47,10 +46,6 @@ gulp.task('build-client-debug', function() {
   gulp.src(path.join(paths.client_src, 'tpl/*'))
     .pipe(gulp.dest(path.join(paths.client_debug, 'tpl')));
   gulp.src(path.join(paths.client_src, 'img/*'))
-    .pipe(imagemin({
-      progressive: true,
-      optimizationLevel: 1
-    }))
     .pipe(gulp.dest(path.join(paths.client_debug, 'img')));
 });
 
